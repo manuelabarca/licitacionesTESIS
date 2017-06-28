@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Licitaciones del estado</title>
+    <script src="angular.min.js" type="text/javascript"></script>
+    <script src="js_merca.js" type="text/javascript"></script>
+    <script src="excel_licitaciones.js" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+    <script src="ui-bootstrap.min.js" type="text/javascript"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body >
+<h1>Busca licitaciones con distintos filtros</h1>
+
+<hr>
+<div ng-app="licitacionesMercado"  ng-controller="licitaciones_all" >
+<h4><span style=color:red;">IMPORTANTE: {{message}}</span></h4>
+
+Fecha de hoy: <span id ="fecha">{{fechaActual | date:'dd-MM-yyyy'}}</span>
+    <p>Porcentaje de licitaciones diarias: {{porcentaje}}%</p>
+    <span>Total Licitaciones: {{totalL}}</span>
+    <hr>
+    <p><span>L1: <input type="checkbox" ng-model="L1" ng-true-value="'-L1'"  ng-false-value="''" > </span>
+    <span>LE: <input type="checkbox" ng-model="LE" ng-true-value="'-LE'"  ng-false-value="''" > </span>
+    <span>LP: <input type="checkbox" ng-model="LP" ng-true-value="'-LP'"  ng-false-value="''"> </span>
+    <span>LQ: <input type="checkbox" ng-model="LQ" ng-true-value="'-LQ'"  ng-false-value="''" > </span>
+    <span>LR: <input type="checkbox" ng-model="LR" ng-true-value="'-LR'"  ng-false-value="''"> </span></p>
+
+    <p>
+        <span>Publicada: <input type="checkbox" ng-model="PB" ng-true-value="'Publicada'" ng-false-value="''"></span>
+    </p>
+<hr>
+
+Buscar por palabra clave
+
+    <input type="text" placeholder="Inserta palabra clave" width="250px" ng-model="search" />
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th colspan="2">Codigo Licitacion</th>
+            <th >Nombre Licitacion</th>
+            <th >Estado Licitacion</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="li in licitacion | filter: search | filter: L1 | filter: LE | filter: LP | filter: LQ | filter: LR ">
+            <td class="" colspan="2"><a href="" ng-click="getInfo(li.CodigoExterno)">{{li.CodigoExterno}}</a></td>
+            <td  class="">{{li.Nombre}}</td>
+            <td class="{{li.CodigoEstado }}">{{li.CodigoEstado | estadoString }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+</body>
+</html>
